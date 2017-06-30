@@ -144,9 +144,11 @@ class MyDate
         calcIndex();
     }
 	
-    private static bool isBetweenTwoNumbers(int firstNumber, int secondNumber, int testNumber)
+    private bool isBetweenTwoNumbers(MyDate firstDate, MyDate secondDate)
     {
-	return (firstNumber - testNumber) * (secondNumber  testNumber)&lt;=0;
+    	if(firstDate == null || secondDate == null)
+	    return false;
+	return (firstDate.index - this.index) * (secondDate.index - this.index)&lt;=0;
     }
     
     public static int operator-(MyDate firstDate, MyDate secondDate)
@@ -156,7 +158,7 @@ class MyDate
         int result = firstDate.index - secondDate.index;
         if(SkipDates == null || SkipDates.Count == 0)
             return result;
-        int skip = SkipDates.Where(d=&gt;isBetweenTwoNumbers(firstDate.index,secondDate.index,d.index)).Count();
+        int skip = SkipDates.Where(d=&gt;d.isBetweenTwoNumbers(firstDate,secondDate)).Count();
         skip = result &gt; 0 ? skip : -skip;
         return result - skip;
     }
