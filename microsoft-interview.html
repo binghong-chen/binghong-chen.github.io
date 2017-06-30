@@ -46,7 +46,7 @@ class MyDate
     
     private int index = 0;
     
-    public static List<MyDate> SkipDates = null;
+    public static List&lt;MyDate&gt; SkipDates = null;
     
     private static bool isLeapYear(int year)
     {
@@ -60,7 +60,7 @@ class MyDate
     {
         this.index = 0;
         
-        for(int y=0;y<year;y++)
+        for(int y=0;y&lt;year;y++)
         {
             if(isLeapYear(y))
             {
@@ -76,7 +76,7 @@ class MyDate
         
         int m = month-1;
         this.index += this.date;
-        while(m>0)
+        while(m&gt;0)
         {
             m--;
             this.index += monthDays[m];
@@ -85,29 +85,29 @@ class MyDate
     
     private void checkDate()
     {
-        if(year<=0 || year>9999)
+        if(year&lt;=0 || year&gt;9999)
         {
             throw new Exception("Invalid Date");
         }
-        if(month<=0 || month>=13)
+        if(month&lt;=0 || month&gt;=13)
         {
             throw new Exception("Invalid Date");
         }
-        if(date<=0)
+        if(date&lt;=0)
         {
             throw new Exception("Invalid Date");
         }
         
         if(month==1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
         {
-            if(date>=32)
+            if(date&gt;=32)
             {
                 throw new Exception("Invalid Date");
             }
         }
         else if(month != 2)
         {
-            if(date>=31)
+            if(date&gt;=31)
             {
                 throw new Exception("Invalid Date");
             }
@@ -116,14 +116,14 @@ class MyDate
         {
             if(this.isLeap)
             {
-                if(date>=30)
+                if(date&gt;=30)
                 {
                     throw new Exception("Invalid Date");
                 }
             }
             else
             {
-                if(date>=29)
+                if(date&gt;=29)
                 {
                     throw new Exception("Invalid Date");
                 }
@@ -146,7 +146,7 @@ class MyDate
 	
     private static bool isBetweenTwoNumbers(int firstNumber, int secondNumber, int testNumber)
     {
-	return (firstNumber - testNumber) * (secondNumber  testNumber)<=0;
+	return (firstNumber - testNumber) * (secondNumber  testNumber)&lt;=0;
     }
     
     public static int operator-(MyDate firstDate, MyDate secondDate)
@@ -156,8 +156,8 @@ class MyDate
         int result = firstDate.index - secondDate.index;
         if(SkipDates == null || SkipDates.Count == 0)
             return result;
-        int skip = SkipDates.Where(d=>isBetweenTwoNumbers(firstDate.index,secondDate.index,d.index)).Count();
-        skip = result > 0 ? skip : -skip;
+        int skip = SkipDates.Where(d=&gt;isBetweenTwoNumbers(firstDate.index,secondDate.index,d.index)).Count();
+        skip = result &gt; 0 ? skip : -skip;
         return result - skip;
     }
 }
@@ -166,7 +166,7 @@ public class Test
 {
 	public static void Main()
 	{
-	    MyDate.SkipDates = new List<MyDate>{new MyDate(2017,6,5),new MyDate(2017,6,1)};
+	    MyDate.SkipDates = new List&lt;MyDate&gt;{new MyDate(2017,6,5),new MyDate(2017,6,1)};
       	    MyDate firstDate = new MyDate(2017,7,1);
 	    MyDate secondDate = new MyDate(2017,6,2);
 	    Console.WriteLine(firstDate-secondDate);
