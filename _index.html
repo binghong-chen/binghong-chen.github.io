@@ -8,39 +8,126 @@
     <style>
         body {
             font-family: "微软雅黑";
+            background-color: #eee;
         }
 
-        .header {
+        .header{
+            height: 70px;
+            line-height: 70px;
+            font-size: 24px;
+            color: white;
+            background-color:#333;
+        }
+
+        .title{
+            margin-left: 200px;
+        }
+
+        .left {
+            float: left;
+            width: 200px;
+            margin-top: 5px;
+            background-color: #333;
+            color: white;
+        }
+
+        .left .ajax-link {
+            font-size:16px;
+            padding-left: 10px;
             height: 45px;
+            line-height: 45px;
+            width: 100%;
         }
 
-        .header ul {
-            height: 45px;
+        .selected{
+            background-color: white;
+            color: #333;
         }
 
-        .header li {
+        .center {
+            width: calc(70% - 213px);
+            height: calc(100% - 83px);
+            position: absolute;
+            left: 20%;
+            top: 83px;
+            bottom: 0;
+            z-index: 1;
+            background-color: white;
+        }
+
+        .list-item{
+            height: 70px;
+            padding:20px;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        .list-item:hover{
+            background: #f2f2f2;
+        }
+
+        .ajax-link{
+            cursor: pointer;
             display: inline-block;
-            height: 45px;
-            text-decoration: none;
-            margin-left: 20px;
+            border-bottom: 1px solid transparent;
+            transform: color 1s;
+            -moz-transform: color 1s;
+            -webkit-transform: color 1s;
+            -o-transform: color 1s;
         }
 
-        .header a {
-            text-decoration: none;
+        .ajax-link:hover{
+            color: firebrick;
         }
 
-        .content {
-            margin-top: 45px;
+        .list-item .ajax-link{
+            font-size: 18px;
+        }
+
+        .preview{
+            font-size:16px;
+            color:#777;
         }
     </style>
 </head>
 
 <body>
     <div class="header">
-        @header@
+        <div class="title">
+            陈柄宏的学习笔记
+        </div>
     </div>
-    <div class="content">
-        @content@
+    <div class="left">
+        @left@
+    </div>
+    <div class="center">
+            @content@
+    </div>
+    <script type="text/javascript">
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            document.querySelectorAll('.content').innerHTML = xhr.response;
+        }
+
+        function get(url) {
+            xhr.open('GET', url);
+            xhr.send();
+        }
+
+        window.onload = function () {
+            var links = document.querySelectorAll('ajax-link');
+            for(var i=0;i<links.length;i++){
+                links[i].onclick = function(){
+                    get(this.getAttribute('data-url'));
+                    if(this.parentNode.classList.contains('left')){
+                        this.parentNode.childNodes.forEach(child=>{
+                            child.classList.remove('selected');
+                        });
+                        this.classList.add('selected');
+                    }
+                };
+            }
+        };
+    </script>
 </body>
 
 </html>

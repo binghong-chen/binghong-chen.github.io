@@ -1,0 +1,49 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+<!-- 此处省略掉markdown的css样式，因为太长了 -->
+</style>
+<h2>二,单变量线性回归(Linear Regression with One Variable)</h2>
+<p>房价问题</p>
+<p>Hypothesis:
+$$
+    h_\theta=\theta_0+\theta_1x
+$$
+Parameters:
+$$
+    \theta_0,\theta_1
+$$
+Cost Function:
+$$
+    J(\theta_0,\theta_1)=\frac{1}{2m}\sum_{i=1}^m\left(h_\theta(x^{(i)}-y^{(i)}\right)^2
+$$
+Goal:
+$$
+    \min_{\theta_0,\theta_1}J(\theta_0,\theta_1)
+$$
+Gradient descent algorithm:<br />
+repeat until convergence {<br />
+&ensp;&ensp;$\theta_j:=\theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta_0,\theta_1)\;\;\;\;\;\;(for\;j=0\;and\;j=1)$<br />
+}</p>
+<p>正确代码:同时更新参数<br />
+$
+    temp0:=\theta_0-\alpha\frac{\partial}{\partial\theta_j}J(\theta_0,\theta_1)\
+    temp0:=\theta_0-\alpha\frac{\partial}{\partial\theta_j}J(\theta_0,\theta_1)\
+    \theta_0:=temp0\
+    \theta_1:=temp1
+$</p>
+<p>错误代码:<br />
+$
+    temp0:=\theta_0-\alpha\frac{\partial}{\partial\theta_j}J(\theta_0,\theta_1)\
+    \theta_0:=temp0\
+    temp0:=\theta_0-\alpha\frac{\partial}{\partial\theta_j}J(\theta_0,\theta_1)\
+    \theta_1:=temp1
+$</p>
+<p><font class="todo" color="red">TODO:为什么需要同时更新参数?</font>   </p>
+<blockquote>
+<p>我们一般说的梯度下降算法就是指同时更新的梯度下降算法,错误代码有时也会得到局部最小值.但是和正确代码有些微小差别,具有不同的性质.</p>
+</blockquote>
+<p><font class="todo" color="red">TODO:如何设置学习率$\alpha$?</font></p>
+<p>"Batch" Gradient Descent</p>
+<p>"Batch": Each step of gradient descent uses all the training examples.
+关于梯度下降算法,可以查看<a href="../3.机器学习自我总结/梯度下降算法.md">更多</a>.</p>
