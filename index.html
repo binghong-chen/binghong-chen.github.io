@@ -189,7 +189,7 @@ using System.Collections.G
         }
 
         window.onload = function () {
-            var links = document.querySelectorAll('ajax-link');
+            var links = document.querySelectorAll('.ajax-link');
             for(var i=0;i<links.length;i++){
                 links[i].onclick = function(){
                     get(this.getAttribute('data-url'));
