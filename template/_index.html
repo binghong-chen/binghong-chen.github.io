@@ -304,7 +304,7 @@
 
         function pageLoad() {
             var index = location.search.replace('?', '');
-            if (location.href == 'http://localhost:8080/myblog/' || location.href == 'http://localhost:8080/myblog') {
+            if (location.href == baseurl) {
                 url = 'generate_page/generate_page_0.首页.html';
             }
             get(index);
