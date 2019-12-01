@@ -126,11 +126,11 @@
             list-style-type: none;
         }
     </style>
-    <!-- <link rel="stylesheet" href="monokai.css"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
     <link id="code-css" rel="stylesheet" href="monokai-sublime.css">
+    <!-- <link rel="stylesheet" href="https://cdn2.jianshu.io/shakespeare/_next/static/css/styles.e9caab88.chunk.css">
     <link rel="stylesheet" href="https://cdn2.jianshu.io/shakespeare/_next/static/css/styles.e9caab88.chunk.css">
-    <link rel="stylesheet" href="https://cdn2.jianshu.io/shakespeare/_next/static/css/styles.e9caab88.chunk.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/github-markdown-css/3.0.1/github-markdown.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/github-markdown-css/3.0.1/github-markdown.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css">
     <script src="jquery-2.1.1.min.js"></script>
     <script id="code-script" src="highlight.pack.js"></script>
@@ -165,8 +165,10 @@
                 if (xhr.status != 200) return;
                 if (xhr.readyState != 4) return;
                 var currentUrl = xhr.responseURL.replace(baseurl, '');
-                // markdown
                 var html = xhr.response;
+
+    
+                // markdown
                 if (xhr.responseURL.indexOf('.md') != -1) {
                     // marked.js会把\\(换行)改成\
                     html = html.replace(/\\\\/g, '\\\\\\\\').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -176,7 +178,7 @@
                 // latex
                 html = html.replace(/\$\$([\s\S]*?)\$\$/g, '<code class="language-math one-row-code">$1</code>');
                 html = html.replace(/\$([\s\S]*?)\$/g, '<code class="language-math">$1</code>');
-
+    
                 // 相对路径
                 var reg1 = new RegExp(/(src|href)="http/);
                 var reg2 = new RegExp(/"(.*?)"/);
@@ -237,9 +239,11 @@
 
                     $('code.language-math').each(function () {
                         try {
-                            katex.render($(this).text().replace(/\r/g, ''), this);
+                            var raw = $(this).text().replace(/\%/g, '\\%');
+                            katex.render(raw, this);
                         } catch (e) {
                             console.error(e);
+                            console.error(raw);
                         }
                     });
                 }, 200);
