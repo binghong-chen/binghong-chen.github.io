@@ -1,23 +1,34 @@
-import os,shutil,json
+import os,shutil,re,json,markdown
 
 fileDir = '.'
 rMap = {
-    ',': ',',
-    ',': ',',
-    ''': '\'',
-    ''': '\'',
-    '.': '.',
-    '"': '"',
-    '"': '"',
-    '?': '?',
-    '!': '!',
+    '，': ',',
+    '、': ',',
+    '‘': '\'',
+    '’': '\'',
+    '。': '.',
+    '“': '"',
+    '” ': '"',
+    '？': '?',
+    '！': '!',
     '(': '(',
     ')': ')',
-    ';': ';',
-    ':': ':',
-    '(': '(',
-    ')': ')',
+    '；': ';',
+    '：': ':',
+    '（': '(',
+    '）': ')',
+    '|<|<': '《',
+    '|>|>': '》',
 }
+
+def getindex(title):
+    res = re.search(r'\d+', title)
+    if(res == None):
+        sum = 0
+        for c in title:
+         sum += ord(c)
+        return sum
+    return int(res.group(0))
 
 pages_dir = 'generate_page/'
 if os.path.exists(pages_dir):
@@ -34,7 +45,7 @@ totalWords = 0
 cats = set()
 pages = []
 for root, dir, files in os.walk('.'):
-    for file in files:
+    for file in sorted(files, key=lambda f:getindex(f)):
         filename, filetype=os.path.splitext(file)
         full_path = os.path.join(root, file)
         if file.lower() == 'readme.md':
@@ -50,10 +61,18 @@ for root, dir, files in os.walk('.'):
                 content = content.replace(r, rMap[r])
             countWords = len(content)
             print('{0} 字数为: {1}'.format(full_path, countWords))
+            if countWords == 0:
+                print(full_path)
+                content = '## ' + filename + '\n' + filename + '\n'
+            countWords = len(content)
             totalWords += countWords
             with open(full_path, 'w') as fw:
                 fw.write(content)
-                file_content_head = content[:100].replace('#','')
+        content_split = content.split('\n')
+        if len(content_split) < 2:
+            file_content_head = ''
+        else:
+            file_content_head = markdown.markdown(content_split[1])
         if full_path.count('/') > 1:
             cat = full_path.split('/')[1]
         else:

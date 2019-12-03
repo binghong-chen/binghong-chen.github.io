@@ -1,4 +1,5 @@
-## 二,单变量线性回归(Linear Regression with One Variable)
+## Lecture2(Linear regression with one variable) 第二课:单变量线性回归
+14年吴恩达机器学习课程.第二课:单变量线性回归.介绍了模型表达,成本函数和梯度下降算法.
 
 房价问题
 

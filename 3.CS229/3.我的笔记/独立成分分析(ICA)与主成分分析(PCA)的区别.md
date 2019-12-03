@@ -1,4 +1,5 @@
 ## 独立成分分析(ICA)与主成分分析(PCA)的区别
+PCA和ICA都是在处理数据时候很有用的算法,它们之间有着什么样的区别和联系呢?必须了解PCA和ICA它们到底再做什么,了解它们的本质才能有更加深刻的认识.
 
 [1. 知乎问题-独立成分分析(ICA)与主成分分析(PCA)的区别在哪里?](https://www.zhihu.com/question/28845451)  
 [2. 沈春旭-独立成分分析(ICA)与主成分分析(PCA)的区别](https://blog.csdn.net/shenziheng1/article/details/53547401)
