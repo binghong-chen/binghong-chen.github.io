@@ -8,7 +8,7 @@
     </title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
     <link id="code-css" rel="stylesheet" href="monokai-sublime.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css">
+    <link rel="stylesheet" href="katex/dist/katex.min.css">
     <style type="text/css">
         body {
             font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -22,6 +22,11 @@
 
         a {
             text-decoration: none;
+        }
+
+        .center img {
+            cursor: pointer;
+            max-height: 300px;
         }
 
         ::selection {
@@ -41,7 +46,7 @@
         .title {
             height: 80px;
             line-height: 80px;
-            margin-left: calc(15% + 130px);
+            margin-left: calc(25% + 130px);
             color: black;
             font-size: 22px;
             font-weight: bolder;
@@ -56,6 +61,7 @@
             color: white;
             position: fixed;
             z-index: 9999;
+            padding-top: 80px;
         }
 
         .left .ajax-link {
@@ -68,12 +74,12 @@
 
         .selected {
             color: firebrick;
-            background-color: #f4f4f4;
+            font-weight: bold;
         }
 
         .center {
-            width: 70%;
-            left: calc(15% + 110px);
+            width: 50%;
+            left: calc(25% + 110px);
             top: 12px;
             margin-bottom: 40px;
             z-index: 1;
@@ -83,6 +89,8 @@
 
         .list-item {
             min-height: 70px;
+            padding: 10px;
+            margin-bottom: 10px;
         }
 
         .ajax-link {
@@ -103,7 +111,11 @@
         .preview {
             color: #777;
             font-size: 16px;
-            margin-top: 10px;
+            margin-top: 4px;
+        }
+
+        .preview>p {
+            margin: 0;
         }
 
         .one-row-code {
@@ -146,8 +158,11 @@
     </style>
     <script src="jquery-2.1.1.min.js"></script>
     <script id="code-script" src="highlight.pack.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"></script>
+    <script src="marked.min.js"></script>
+    <script src="katex/dist/katex.min.js"></script>
+    <script src="raphael.min.js"></script>
+    <script src="flowchart.js"></script>
+    <script src="mermaid.min.js"></script>
 </head>
 
 <body>
@@ -187,7 +202,7 @@
                 // markdown
                 if (xhr.responseURL.indexOf('.md') != -1) {
                     // marked.js会把\\(换行)改成\
-                    html = html.replace(/\\\\/g, '\\\\\\\\').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+                    html = html.replace(/\\\\/g, '\\\\\\\\');
                     html = marked(html);
                 }
                 // latex
@@ -211,31 +226,51 @@
                 $('.center').html(html);
                 // .center的ajax页面渲染完成后
                 setTimeout(function () {
+                    // 流程图
+
                     // 代码高亮
-                    $('pre').each(function () {
-                        var code = this.innerText;
-                        $(this).addClass('hljs').html(hljs.highlightAuto(code).value);
-                        var $copy = $('<span class="code-copy">复制</span>');
-                        var codesplits = code.split('\n');
-                        var ulHtml = [];
-                        ulHtml.push('<ul class="code-row-no">');
-                        for (var i = 0; i < codesplits.length; i++) {
-                            ulHtml.push('<li>', i + 1, '</li>');
+                    $('pre code').each(function () {
+                        var $this = $(this);
+                        var code = $this.text();
+                        var language = $this.attr('class');
+                        if (!language) return;
+                        language = language.substring(9);
+                        if (language == 'mermaid') {
+                            var id = 'diagram-' + new Date().getTime();
+                            var $diagram = $('<div></div>');
+                            $diagram.attr('id', id).insertAfter($this.parent());
+                            var graph = mermaid.render(id + '-svg', code, function (svgCode, bindFunctions) {
+                                $diagram.html(svgCode);
+                            });
+                            // var diagram = flowchart.parse(code);
+                            // diagram.drawSVG(id);
+                            $this.parent().remove();
                         }
-                        ulHtml.push('</ul>');
-                        var $ul = $(ulHtml.join(''));
-                        $ul.css({
-                            'float': 'left'
-                        });
-                        $(this).prepend($ul);
-                        $(this).prepend($copy);
-                        $copy.click(function () {
-                            copy(code);
-                            $copy.text('已复制');
-                            setTimeout(function () {
-                                $copy.text('复制');
-                            }, 1000);
-                        });
+                        else {
+                            $this.addClass('hljs ' + language).html(hljs.highlightAuto(code).value);
+                            var $copy = $('<span class="code-copy">复制</span>');
+                            var codesplits = code.split('\n');
+                            var ulHtml = [];
+                            ulHtml.push('<ul class="code-row-no">');
+                            for (var i = 0; i < codesplits.length; i++) {
+                                ulHtml.push('<li>', i + 1, '</li>');
+                            }
+                            ulHtml.push('</ul>');
+                            var $ul = $(ulHtml.join(''));
+                            $ul.css({
+                                'float': 'left'
+                            });
+                            $(this).prepend($ul);
+                            $(this).prepend($copy);
+                            $copy.click(function () {
+                                copy(code);
+                                $copy.text('已复制');
+                                setTimeout(function () {
+                                    $copy.text('复制');
+                                }, 1000);
+                            });
+                        }
+
                     });
                     // 禁用站内链接的默认跳转功能
                     $('a').each(function () {
@@ -247,16 +282,19 @@
                         }
                     });
                     // 图片居中
-                    $('.center img').each(function(){
+                    $('.center img').each(function () {
                         var $img = $(this);
+                        $img.click(function () {
+                            // TODO: 点击查看大图
+                        });
                         var $parent = $img.parent();
-                        if($parent.attr('align') != 'center'){
+                        if ($parent.attr('align') != 'center') {
                             var $prev = $img.prev();
                             var $newParent = $('<div align=center></div>');
                             $newParent.append($img);
-                            if($prev.length == 0){
+                            if ($prev.length == 0) {
                                 $newParent.appendTo($parent)
-                            }else{
+                            } else {
                                 $newParent.insertAfter($prev);
                             }
                         }
@@ -340,9 +378,6 @@
         // 浏览器地址栏变化(手动改变url,回退)事件 将ajax跳转
         function pageLoad() {
             var index = location.search.replace('?', '');
-            if (location.href == baseurl) {
-                url = 'generate_page/generate_page_0.首页.html';
-            }
             ajaxJump(index);
         }
 
