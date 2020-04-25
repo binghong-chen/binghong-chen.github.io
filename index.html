@@ -6,9 +6,9 @@
     <title>
         陈柄宏的学习笔记
     </title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
-    <link id="code-css" rel="stylesheet" href="monokai-sublime.css">
-    <link rel="stylesheet" href="katex/dist/katex.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link id="code-css" rel="stylesheet" href="css/monokai-sublime.css">
+    <link rel="stylesheet" href="js/katex/dist/katex.min.css">
     <style type="text/css">
         body {
             font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -156,13 +156,13 @@
             list-style-type: none;
         }
     </style>
-    <script src="jquery-2.1.1.min.js"></script>
-    <script id="code-script" src="highlight.pack.js"></script>
-    <script src="marked.min.js"></script>
-    <script src="katex/dist/katex.min.js"></script>
-    <script src="raphael.min.js"></script>
-    <script src="flowchart.js"></script>
-    <script src="mermaid.min.js"></script>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/highlight.pack.js"></script>
+    <script src="js/marked.min.js"></script>
+    <script src="js/katex/dist/katex.min.js"></script>
+    <script src="js/raphael.min.js"></script>
+    <script src="js/flowchart.js"></script>
+    <script src="js/mermaid.min.js"></script>
 </head>
 
 <body>
@@ -178,77 +178,77 @@
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="3">
+<div class="ajax-link" data-url="4">
     数学基础
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="69">
+<div class="ajax-link" data-url="70">
     吴恩达2014机器学习
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="72">
+<div class="ajax-link" data-url="73">
     吴恩达CS229
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="75">
+<div class="ajax-link" data-url="76">
     卿来云2017机器学习
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="88">
+<div class="ajax-link" data-url="89">
     李航《统计机器学习》
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="101">
+<div class="ajax-link" data-url="102">
     周志华《机器学习》
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="119">
+<div class="ajax-link" data-url="120">
     机器学习总结
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="132">
+<div class="ajax-link" data-url="133">
     宗成庆《统计自然语言处理》
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="151">
+<div class="ajax-link" data-url="152">
     自然语言处理总结
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="13">
+<div class="ajax-link" data-url="14">
     Python
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="20">
+<div class="ajax-link" data-url="21">
     Java
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="27">
+<div class="ajax-link" data-url="28">
     数据结构
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="37">
+<div class="ajax-link" data-url="38">
     算法
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="46">
+<div class="ajax-link" data-url="47">
     Leetcode刷题笔记
 </div>
 
 <div class="split"></div>
-<div class="ajax-link" data-url="56">
+<div class="ajax-link" data-url="57">
     其他笔记
 </div>
 
@@ -259,12 +259,13 @@
         // 网站的所有页面列表
         var pages = [
     "generate_page/generate_page_0.首页.html",
+    ".\\IDEA配置.md",
     ".\\关于作笔记这件事.md",
     ".\\微软.NET工程师面试.md",
     "generate_page/generate_page_1.数学基础.html",
     ".\\1.数学基础\\1.简单测试题.md",
     ".\\1.数学基础\\2.微积分.md",
-    ".\\1.数学基础\\3.线性代数.md",
+    ".\\1.数学基础\\3.线性代数与矩阵论.md",
     ".\\1.数学基础\\4.概率论与数理统计.md",
     ".\\1.数学基础\\5.最优化.md",
     ".\\1.数学基础\\最小二乘法.md",
@@ -334,18 +335,18 @@
     ".\\3.吴恩达CS229\\3.我的笔记\\(11)独立成分分析.md",
     ".\\3.吴恩达CS229\\3.我的笔记\\独立成分分析(ICA)与主成分分析(PCA)的区别.md",
     "generate_page/generate_page_4.卿来云2017机器学习.html",
-    ".\\4.卿来云2017机器学习\\第六章：聚类.md",
-    ".\\4.卿来云2017机器学习\\第七章：特征工程.md",
-    ".\\4.卿来云2017机器学习\\第四章：支持向量机(SVM).md",
-    ".\\4.卿来云2017机器学习\\第一章：机器学习简介.md",
-    ".\\4.卿来云2017机器学习\\第二章：第一个机器学习实例.md",
-    ".\\4.卿来云2017机器学习\\第五章：降维与矩阵分解.md",
-    ".\\4.卿来云2017机器学习\\第三章：Logistic回归分析及神经网络.md",
-    ".\\4.卿来云2017机器学习\\第九章：梯度提升决策树（GBDT）.md",
-    ".\\4.卿来云2017机器学习\\第十章：梯度提升决策树（GBDT）二.md",
-    ".\\4.卿来云2017机器学习\\第一十二章：广告点击率（CTR）预估和模型融合.md",
-    ".\\4.卿来云2017机器学习\\第八章：决策树及基于树的集成模型：随机森林.md",
-    ".\\4.卿来云2017机器学习\\第一十一章：推荐系统与广告点击率（CTR）预估.md",
+    ".\\4.卿来云2017机器学习\\第1章：机器学习简介.md",
+    ".\\4.卿来云2017机器学习\\第2章：第一个机器学习实例.md",
+    ".\\4.卿来云2017机器学习\\第3章：Logistic回归分析及神经网络.md",
+    ".\\4.卿来云2017机器学习\\第4章：支持向量机(SVM).md",
+    ".\\4.卿来云2017机器学习\\第5章：降维与矩阵分解.md",
+    ".\\4.卿来云2017机器学习\\第6章：聚类.md",
+    ".\\4.卿来云2017机器学习\\第7章：特征工程.md",
+    ".\\4.卿来云2017机器学习\\第8章：决策树及基于树的集成模型：随机森林.md",
+    ".\\4.卿来云2017机器学习\\第9章：梯度提升决策树（GBDT）.md",
+    ".\\4.卿来云2017机器学习\\第10章：梯度提升决策树（GBDT）二.md",
+    ".\\4.卿来云2017机器学习\\第11章：推荐系统与广告点击率（CTR）预估.md",
+    ".\\4.卿来云2017机器学习\\第12章：广告点击率（CTR）预估和模型融合.md",
     "generate_page/generate_page_5.李航《统计机器学习》.html",
     ".\\5.李航《统计机器学习》\\第1章 统计学习方法概论.md",
     ".\\5.李航《统计机器学习》\\第2章 感知机.md",

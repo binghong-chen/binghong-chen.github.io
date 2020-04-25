@@ -1,4 +1,4 @@
-## 第四章:支持向量机(SVM)
+## 第4章:支持向量机(SVM)
 来源网址: http://edu.csdn.net/huiyiCourse/detail/540
 
 ### 学习要点

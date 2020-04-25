@@ -1,4 +1,4 @@
-## 第三章:Logistic回归分析及神经网络
+## 第3章:Logistic回归分析及神经网络
 课程网址: http://edu.csdn.net/huiyiCourse/detail/539
 
 ### 学习要点
