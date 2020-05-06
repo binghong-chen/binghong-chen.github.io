@@ -1,0 +1,163 @@
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+h2 {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header {
+    top: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 9999;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+.title {
+    height: 80px;
+    line-height: 80px;
+    margin-left: 525px;
+    /* margin-left: calc(25% + 130px); */
+    color: black;
+    font-size: 22px;
+    font-weight: bolder;
+}
+
+.left {
+    float: left;
+    width: 220px;
+    height: 100%;
+    margin-top: -80px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 80px;
+}
+
+.left .ajax-link {
+    font-size: 16px;
+    padding-left: 10px;
+    height: 45px;
+    line-height: 45px;
+    width: 210px;
+}
+
+.selected {
+    color: firebrick;
+    font-weight: bold;
+}
+
+.center {
+    background-color: white;
+    position: relative;
+    left: 500px;
+    /* left: calc(25% + 110px); */
+    margin-bottom: 40px;
+    padding: 40px;
+    box-shadow: 0 0 8px #ccc;
+    width: 910px;
+    /* width: 50%; */
+    top: 12px;
+    z-index: 1;
+}
+
+.center img {
+    cursor: pointer;
+    max-width: 900px;
+    max-height: 300px;
+}
+
+.list-item {
+    min-height: 70px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.ajax-link {
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.left .ajax-link:hover,
+.center .ajax-link:hover {
+    text-decoration: underline;
+}
+
+.list-item .ajax-link {
+    font-size: 22px;
+}
+
+.preview {
+    color: #777;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+.preview>p {
+    margin: 0;
+}
+
+code.hljs {
+    font-family: Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace;
+}
+
+code.hljs::selection, code.hljs *::selection {
+    background: #a6bbb0;
+}
+
+.one-row-code {
+    display: block;
+    text-align: center;
+}
+
+pre {
+    font-size: 14px;
+}
+
+pre .code-copy {
+    position: absolute;
+    margin-top: 8px;
+    right: 47px;
+    padding: 5px;
+    opacity: 0;
+    cursor: pointer;
+    color: #888;
+    border-radius: 1px;
+    background-color: white;
+    font-size: 12px;
+}
+
+pre:hover .code-copy{
+    opacity: 1;
+}
+
+.code-row-no {
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    float: left;
+    margin-top: 0;
+    padding: 7px;
+    text-align: right;
+    list-style-type: none;
+    color: #aaa;
+    display: block;
+    overflow-x: auto;
+    background: #23241f;
+    border-right: 1px solid #666;
+    font-family: Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace;
+}

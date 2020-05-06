@@ -1,8 +1,5 @@
 ## IDEA配置
 
-archetypeCatalog    internal
-
-
 ### 常用
 一键格式化代碼: Ctrl+Alt+L
 
