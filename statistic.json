@@ -1,0 +1,133 @@
+{
+    "2020-05-10": {
+        "total_lines": 6758,
+        "code_lines_detail": {
+            "md": 5253,
+            "cpp": 723,
+            "java": 307,
+            "py": 189,
+            "js": 256,
+            "ipynb": 30
+        },
+        "note_words": 154576
+    },
+    "2020-05-11": {
+        "total_lines": 7106,
+        "code_lines_detail": {
+            "md": 5526,
+            "cpp": 740,
+            "java": 307,
+            "h": 58,
+            "py": 189,
+            "js": 256,
+            "ipynb": 30
+        },
+        "note_words": 160301
+    },
+    "2020-05-12": {
+        "total_lines": 7924,
+        "code_lines_detail": {
+            "md": 5566,
+            "cpp": 1009,
+            "java": 307,
+            "h": 56,
+            "py": 194,
+            "js": 526,
+            "ipynb": 30,
+            "html": 37,
+            "css": 199
+        },
+        "note_words": 161078
+    },
+    "2020-05-13": {
+        "total_lines": 8186,
+        "code_lines_detail": {
+            "md": 5696,
+            "cpp": 1009,
+            "java": 307,
+            "h": 56,
+            "py": 325,
+            "js": 527,
+            "ipynb": 30,
+            "html": 37,
+            "css": 199
+        },
+        "note_words": 163406
+    },
+    "2020-05-14": {
+        "total_lines": 8357,
+        "code_lines_detail": {
+            "md": 5852,
+            "cpp": 1009,
+            "java": 307,
+            "h": 56,
+            "py": 340,
+            "js": 527,
+            "ipynb": 30,
+            "html": 37,
+            "css": 199
+        },
+        "note_words": 166146
+    },
+    "2020-05-15": {
+        "total_lines": 10130,
+        "code_lines_detail": {
+            "md": 5867,
+            "cpp": 1009,
+            "java": 920,
+            "h": 56,
+            "py": 1006,
+            "js": 815,
+            "ipynb": 30,
+            "html": 37,
+            "css": 390
+        },
+        "note_words": 166378
+    },
+    "2020-05-18": {
+        "total_lines": 11130,
+        "code_lines_detail": {
+            "md": 5988,
+            "cpp": 1009,
+            "java": 991,
+            "h": 56,
+            "py": 1096,
+            "js": 840,
+            "ipynb": 596,
+            "html": 37,
+            "css": 392,
+            "sql": 125
+        },
+        "note_words": 170961
+    },
+    "2020-05-19": {
+        "total_lines": 10854,
+        "code_lines_detail": {
+            "md": 6017,
+            "cpp": 1009,
+            "java": 1074,
+            "h": 56,
+            "py": 655,
+            "js": 840,
+            "ipynb": 774,
+            "html": 37,
+            "css": 392
+        },
+        "note_words": 171278
+    },
+    "2020-06-06": {
+        "total_lines": 15943,
+        "code_lines_detail": {
+            "md": 6251,
+            "cpp": 1009,
+            "java": 307,
+            "h": 56,
+            "py": 347,
+            "js": 951,
+            "css": 5444,
+            "html": 216,
+            "ipynb": 1362
+        },
+        "note_words": 179427
+    }
+}

@@ -6,6 +6,7 @@ var baseurl = location.href.split('?')[0];
 
 // 假链接的跳转事件
 function ajaxJump(url, isForward = false) {
+    $('body,html').animate({ scrollTop: 0 }, 0);
     // 解析页面的url和其index
     var index = +url;
     if (isNaN(index)) {
@@ -14,7 +15,7 @@ function ajaxJump(url, isForward = false) {
         url = pages[index];
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (xhr.status != 200) return;
         if (xhr.readyState != 4) return;
         var currentUrl = xhr.responseURL.replace(baseurl, '');
@@ -25,10 +26,9 @@ function ajaxJump(url, isForward = false) {
             // marked.js会把\}(换行)改成}
             // marked.js会把\{(换行)改成{
             html = html
-            .replace(/\\\\/g, '\\\\\\\\')
-            .replace(/\\{/g, '\\\\{')
-            .replace(/\\}/g, '\\\\}')
-            ;
+                .replace(/\\\\/g, '\\\\\\\\')
+                .replace(/\\{/g, '\\\\{')
+                .replace(/\\}/g, '\\\\}');
             html = marked(html);
         }
         // latex
@@ -51,9 +51,9 @@ function ajaxJump(url, isForward = false) {
         }
         $('.center').html(html);
         // .center的ajax页面渲染完成后
-        setTimeout(function () {
+        setTimeout(function() {
             // 代码处理
-            $('pre code').each(function () {
+            $('pre code').each(function() {
                 var $this = $(this);
                 var code = $this.text();
                 var language = $this.attr('class');
@@ -65,14 +65,13 @@ function ajaxJump(url, isForward = false) {
                     var id = 'diagram-' + new Date().getTime();
                     var $diagram = $('<div></div>');
                     $diagram.attr('id', id).insertAfter($this.parent());
-                    var graph = mermaid.render(id + '-svg', code, function (svgCode, bindFunctions) {
+                    var graph = mermaid.render(id + '-svg', code, function(svgCode, bindFunctions) {
                         $diagram.html(svgCode);
                     });
                     // var diagram = flowchart.parse(code);
                     // diagram.drawSVG(id);
                     $this.parent().remove();
-                }
-                else {
+                } else {
                     // 代码高亮
                     var codeHtml = hljs.highlightAuto(code, [language]).value;
                     $this.addClass('hljs ' + language).html(codeHtml);
@@ -86,15 +85,14 @@ function ajaxJump(url, isForward = false) {
                     }
                     ulHtml.push('</ul>');
                     var $copy = $('<span class="code-copy">复制</span>');
-                    console.log(this.parentNode)
                     $parent = $(this.parentNode);
                     $parent.prepend($copy, $(ulHtml.join('')));
                     // $parent.prepend($(ulHtml.join('')));
                     // 复制按钮
-                    $copy.click(function () {
+                    $copy.click(function() {
                         copy(code);
                         $copy.text('已复制');
-                        setTimeout(function () {
+                        setTimeout(function() {
                             $copy.text('复制');
                         }, 1000);
                     });
@@ -102,21 +100,39 @@ function ajaxJump(url, isForward = false) {
 
             });
             // 禁用站内链接的默认跳转功能
-            $('a').each(function () {
-                var href = $(this).attr('href');
-                if (href.lastIndexOf('.md') == href.length - 3 || pages.indexOf(href) != -1) {
+            $('a').each(function() {
+                var href = decodeURI($(this).attr('href')).replace(/\//g, '\\');
+                if (href.lastIndexOf('.md') == href.length - 3) {
+                    var index = pages.indexOf(href);
+                    if (index == -1) return;
                     $(this).attr('href', 'javascript:void(0);')
-                        .attr('data-url', pages.indexOf('.' + decodeURI(href).replace(/\//g, '\\')))
+                        .attr('data-url', index)
                         .addClass('ajax-link forward');
                 } else {
                     $(this).attr('target', '_blank');
                 }
             });
             // 图片居中
-            $('.center img').each(function () {
+            $('.center img').each(function() {
                 var $img = $(this);
-                $img.click(function () {
+                $img.click(function() {
                     // TODO: 点击查看大图
+                    var $imagePanel = $('#image-panel');
+                    if (!$imagePanel.length) {
+                        $imagePanel = $('<div id="image-panel" class="panel"></div>');
+                        $(document.body).append($imagePanel);
+                    } else {
+                        $imagePanel.find('img').remove();
+                    }
+                    var $bigImg = $('<img src="' + $img.attr('src') + '" />');
+                    $imagePanel.append($bigImg);
+                    $bigImg.load(function() {
+                        $bigImg.css({
+                            'margin-top': (($imagePanel.height() - $bigImg.height()) / 2) + 'px'
+                        });
+                    });
+
+                    showPanel($imagePanel);
                 });
                 var $parent = $img.parent();
                 if ($parent.attr('align') != 'center') {
@@ -131,12 +147,11 @@ function ajaxJump(url, isForward = false) {
                 }
             });
             // latex渲染
-            $('code.language-math').each(function () {
+            $('code.language-math').each(function() {
                 try {
                     // marked.js解析会将$$\%$$解析成% 需要替换回来
                     var raw = $(this).text()
-                    .replace(/\%/g, '\\%')
-                        ;
+                        .replace(/\%/g, '\\%');
                     katex.render(raw, this);
                 } catch (e) {
                     console.error(e);
@@ -185,12 +200,12 @@ function relUrl2AbsUrl(url, currentUrl) {
 }
 
 // 绑定假链接的跳转事件
-window.onclick = function (e) {
+window.onclick = function(e) {
     var el = e.target;
     if (el.classList.contains('ajax-link')) {
         ajaxJump(el.getAttribute('data-url'), el.classList.contains('forward'));
         if (el.parentNode.classList.contains('left')) {
-            $('.left .ajax-link').each(function () {
+            $('.left .ajax-link').each(function() {
                 this.classList.remove('selected');
             })
             el.classList.add('selected');
@@ -200,26 +215,70 @@ window.onclick = function (e) {
 
 // 复制代码
 function copy(str) {
-    var save = function (e) {
-        e.clipboardData.setData('text/plain', str);//下面会说到clipboardData对象
-        e.preventDefault();//阻止默认行为
+    var save = function(e) {
+        e.clipboardData.setData('text/plain', str); //下面会说到clipboardData对象
+        e.preventDefault(); //阻止默认行为
     }
     document.addEventListener('copy', save);
-    document.execCommand("copy");//使文档处于可编辑状态，否则无效
+    document.execCommand("copy"); //使文档处于可编辑状态，否则无效
 }
 
 // 浏览器地址栏变化(手动改变url,回退)事件 将ajax跳转
 function pageLoad() {
     var index = location.search.replace('?', '');
-    if(!pages){
-        $.get('resources/pageMap.json?t=' + new Date().getTime()).then(res=>{
-            pages = res;
-            ajaxJump(index);
-        });
+    if (pages) {
+        ajaxJump(index);
+        return;
     }
+    $.get('resources/pageMap.json?t=' + new Date().getTime()).then(res => {
+        pages = res;
+        ajaxJump(index);
+    });
 }
 
-$(function () {
+function closePanel() {
+    document.getElementById('panel').style.display = 'none';
+    $panelBackground.hide();
+}
+
+function showPanel($panel, panelTop = 0) {
+    $panelBackground.show().css({
+        top: window.scrollY + 'px'
+    }).unbind('click').bind('click', function(e) {
+        if (e.target.tagName != 'IMG') {
+            $panel.hide();
+            $panelBackground.hide();
+            $(document.body).css({
+                overflow: ''
+            });
+        }
+    });
+    $panelBackground.data('panel', $panel);
+    $panel.show().css({
+        top: (window.scrollY + panelTop) + 'px'
+    });
+    $(document.body).css({
+        overflow: 'hidden'
+    });
+}
+
+var $panelBackground;
+$(function() {
     window.onpopstate = pageLoad;
     window.onload = pageLoad;
+    $panelBackground = $('#panel-background');
+    var $panel = $('#panel');
+    var dataGeted = false;
+    window.addEventListener('keyup', function(e) {
+        if (e.altKey && e.key == '1') {
+            if (!dataGeted) {
+                $.get('statistic.json').then(function(data) {
+                    $panel.html(JSON.stringify(data));
+                    console.log(data);
+                    dataGeted = true;
+                });
+            }
+            showPanel($panel, 200);
+        }
+    });
 });

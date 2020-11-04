@@ -1,0 +1,2 @@
+def concatMethod():
+    print('concatMethod')

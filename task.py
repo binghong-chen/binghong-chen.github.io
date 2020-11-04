@@ -1,4 +1,6 @@
-import os,shutil,re,json,markdown
+import os,shutil,re,json,markdown,time
+
+from statistic import*
 
 fileDir = '.'
 rMap = {
@@ -30,7 +32,7 @@ def getindex(title):
         return sum
     return int(res.group(0))
 
-def task():
+def gen_blog():
     # 清空生成的列表页面 以便重新生成
     pages_dir = 'generate_page/'
     if os.path.exists(pages_dir):
@@ -50,7 +52,8 @@ def task():
     if os.path.exists(file_time_map_path):
         with open(file_time_map_path, 'r', encoding='utf-8') as fr:
             file_time_map = json.loads(fr.read())
-    for root, dir, files in os.walk('.'):
+    for root, dir, files in os.walk('notes'):
+        print(root)
         for file in sorted(files, key=lambda f:getindex(f)):
             filename, filetype=os.path.splitext(file)
             full_path = os.path.join(root, file)
@@ -72,7 +75,7 @@ def task():
                     content = content.replace(r, rMap[r])
                 countWords = len(content)
                 if countWords == 0:
-                    content = '## ' + filename + '\n' + filename + '\n'
+                    content = f'## {filename}\nTODO 完成{filename}\n'
                 countWords = len(content)
                 with open(full_path, 'w', encoding='utf-8') as fw:
                     fw.write(content)
@@ -97,7 +100,7 @@ def task():
     sorted_cats = [left_item_template.format(pages.index('generate_page/generate_page_' + cat + '.html'), cat.split('.')[1]) for cat in sorted(list(cats), key=lambda cat: int(cat.split('.')[0]))]
     with open('template/_index.html', 'r', encoding='utf-8') as fr:
         content = fr.read()
-        content = content.replace('_left_', '\r\n<div class="split"></div>\r\n'.join(sorted_cats))
+        content = content.replace('_left_', '\r\n<div class="split"></div>\r\n'.join(sorted_cats)).replace('_v_', str(time.time()))
         with open('resources/pageMap.json', 'w', encoding='utf-8') as fw:
             fw.write(json.dumps(pages,ensure_ascii=False, indent=4))
         with open('index.html', 'w', encoding='utf-8') as fw:
@@ -106,5 +109,40 @@ def task():
         fw.write(json.dumps(file_time_map, ensure_ascii=False, indent=4))
     # print(json.dumps(pages,ensure_ascii=False, indent=4))
 
+def gen_statistic():
+    statistic = Statistic()
+    statistic.statistic_code_lines('D:/workspace/git/binghong-chen.github.io/notes/')
+    statistic.statistic_code_lines('D:/workspace/git/binghong-chen.github.io/task.py')
+    statistic.statistic_code_lines('D:/workspace/git/binghong-chen.github.io/statistic.py')
+    statistic.statistic_code_lines('D:/workspace/chrome_extensions/')
+    statistic.statistic_code_lines('D:/workspace/ipynb/')
+    statistic.statistic_code_lines('D:/workspace/git/binghong-chen.github.io/template/_index.html')
+    statistic.statistic_code_lines('D:/workspace/git/binghong-chen.github.io/css/main.css')
+    statistic.statistic_code_lines('D:/workspace/git/binghong-chen.github.io/js/index.js')
+    statistic.statistic_code_lines('D:/share/autodown')
+    statistic.statistic_code_lines('D:/share/playmom/src/main/webapp/js/index.js')
+    statistic.statistic_code_lines('D:/share/playmom/src/main/webapp/css/main.css')
+    statistic.statistic_code_lines('D:/share/playmom/src/main/webapp/index.jsp')
+    statistic.statistic_code_lines('D:/share/playmom/src/main/java/')
+    statistic.statistic_code_lines('D:/share/__.py')
+
+    
+    print('代码总行数: ', sum(statistic.code_lines_map.values()))
+    print('各语言代码行数: ', statistic.code_lines_map)
+    print('笔记总字数: ', statistic.note_words)
+
+    data = dict()
+    if os.path.exists('statistic.json'):
+        data = json.loads(statistic.read('statistic.json'))
+    date_key = str(datetime.now())[:10]
+    data[date_key] = {
+        'total_lines': sum(statistic.code_lines_map.values()),
+        'code_lines_detail': statistic.code_lines_map,
+        'note_words': statistic.note_words,
+    }
+    statistic.write('statistic.json', json.dumps(data,indent=4))
+    print('查看详细记录：', os.path.abspath('statistic.json'))
+
 if __name__ == '__main__':
-    task()
+    gen_blog()
+    gen_statistic();
